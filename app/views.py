@@ -8,8 +8,9 @@ def movie(movie_id):
     '''
     View movie page function that returns the movie page and its data
     '''
-    message = 'Hello world'
-    return render_template('movie.html',id = movie_id)
+    movie = get_movie(id)
+    title = f'{movie.title}'
+    return render_template('movie.html',title = title,movie = movie)
 
 from .request import get_movies
 @app.route('/')
