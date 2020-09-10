@@ -1,16 +1,19 @@
-from app import app
 import urllib.request,json
-from .models import movie
-from .requests import get_movies,get_movie
+from .models import Movie
+
 
 Movie = movie.Movie
 
 # Getting api key
-api_key = app.config['MOVIE_API_KEY']
-
+api_key = None
 #Getting the movie base url
-base_url = app.config["MOVIE_API_BASE_URL"]
+base_url = None
 
+def configure_request(app):
+    global api_key,base_url
+    api_key = app.config['MOVIE_API_KEY']
+    base_url = app.config['MOVIE_API_BASE_URL']
+    
 def get_movies(category):
     '''
     Function that gets the json response to our url request
@@ -50,6 +53,21 @@ def get_movie(id):
 
     return movie_object
 
+def search_movie(movie_name):
+    search_movie_url = 'https://api.themoviedb.org/3/search/movie?api_key=449c5f1e035a6c08d10cf904226a68be'.format(api_key,movie_name)
+    with urllib.request.urlopen(search_movie_url) as url:
+        search_movie_data = url.read()
+        search_movie_response = json.loads(search_movie_data)
+
+        search_movie_results = None
+
+        if search_movie_response['results']:
+            search_movie_list = search_movie_response['results']
+            search_movie_results = process_results(search_movie_list)
+
+
+    return search_movie_results
+
 def process_results(movie_list):
     '''
     Function  that processes the movie result and transform them to a list of Objects
@@ -75,20 +93,6 @@ def process_results(movie_list):
 
     return movie_results
 
-def search_movie(movie_name):
-    search_movie_url = 'https://api.themoviedb.org/3/search/movie?api_key=449c5f1e035a6c08d10cf904226a68be'.format(api_key,movie_name)
-    with urllib.request.urlopen(search_movie_url) as url:
-        search_movie_data = url.read()
-        search_movie_response = json.loads(search_movie_data)
-
-        search_movie_results = None
-
-        if search_movie_response['results']:
-            search_movie_list = search_movie_response['results']
-            search_movie_results = process_results(search_movie_list)
-
-
-    return search_movie_results
 
 
 

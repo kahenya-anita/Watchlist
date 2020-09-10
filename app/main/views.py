@@ -1,5 +1,5 @@
 from flask import render_template,request,redirect,url_for
-from flask import app
+from app import app
 from .request import get_movies,get_movie,search_movie
 from .models import review
 from .forms import ReviewForm
