@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for
-from app import app
+from . import main
 from .request import get_movies,get_movie,search_movie
-from .models import review
+from .models import Review
 from .forms import ReviewForm
 Review = review.Review
 
@@ -18,7 +18,7 @@ def movie(id):
     return render_template('movie.html',title = title,movie = movie,reviews = reviews)
 
 
-@app.route('/')
+@main.route('/')
 def index():
 
     '''
