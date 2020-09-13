@@ -1,3 +1,4 @@
+import os
 class Config:
     '''
     General configuration parent class
@@ -6,7 +7,7 @@ class Config:
     MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
-
+      
 class ProdConfig(Config):
     '''
     Production  configuration child class
@@ -14,7 +15,7 @@ class ProdConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-    pass
+        pass
 
 
 class DevConfig(Config):
@@ -24,8 +25,7 @@ class DevConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-
-    DEBUG = 
+    DEBUG = True
     
     config_options = {
         'development':DevConfig,
